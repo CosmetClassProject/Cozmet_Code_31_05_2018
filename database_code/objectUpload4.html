@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>objectUploader</title>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script>
+      var config = {
+    apiKey: "AIzaSyDiUcBb8L5PHUCMs3NQTbK6tv-FzGQrUHs",
+    authDomain: "cosmet-users.firebaseapp.com",
+    databaseURL: "https://cosmet-users.firebaseio.com",
+    projectId: "cosmet-users",
+    storageBucket: "cosmet-users.appspot.com",
+    messagingSenderId: "8164921910"
+    };
+    firebase.initializeApp(config);
+    console.log(firebase);
+
+    let database = firebase.database();
+    </script>
+  </head>
+  <body>
+
+  <button onclick="getProductData();" >Get data</button>
+  <button onclick="submitProductData();" >Sent to database</button>
+  <button onclick="testDisplay();" >testDisplay</button>
+
+  <img id="showResult">test</img>
+  </body>
+</html>
+
+<script type="text/javascript">
+
+//Size in ml
+let size = 500;
+
+function size(size) {
+  size = this.size;
+  return size;
+}
+
+//Keywords
+keyword = "men's shampoo"
+
+// Rating System global variables
+let scoreRating = 4.5;
+
+// Pricing global variables
+let  price = 7.99;
+let euro = 1;
+let US_dollar = euro * 1.23;
+let Sterling = euro * .88;
+
+
+
+
+// let Euro_Price;
+function Euro_Price(Euro_Price) {
+  Euro_Price = euro * price;
+  console.log("€" + Euro_Price);
+  return ("€" + Euro_Price);
+}
+
+function USD_Price(USD_Price) {
+  USD_Price = (US_dollar * price).toFixed(2);
+  console.log("$" + USD_Price);
+  return ("$" + USD_Price);
+}
+
+function Sterling_Price(Sterling_Price) {
+  Sterling_Price = (Sterling * price).toFixed(2);
+  console.log("£" + Sterling_Price);
+  return ("£" + Sterling_Price);
+}
+
+function ProductImages(imageRefs) {
+  imageRefs = [
+    "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FManCave%20Caffeine%20Shampoo%20200ml%2Fcaffeine_shampoo1.png?alt=media&token=d1587ed4-cd04-4823-a666-0df73ef644de",
+    "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FManCave%20Caffeine%20Shampoo%20200ml%2Fcaffeine_shampoo2.png?alt=media&token=1fb22cc0-055c-4231-9a60-dadda75a6af6",
+    "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FManCave%20Caffeine%20Shampoo%20200ml%2Ffiller.png?alt=media&token=71204031-4eff-4ec2-b9ac-6d64b3bd1916",
+    "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FManCave%20Caffeine%20Shampoo%20200ml%2Ffiller.png?alt=media&token=71204031-4eff-4ec2-b9ac-6d64b3bd1916"
+  ];
+  return imageRefs;
+}
+
+
+function searchWords(keyword) {
+  keyword = this.keyword;
+  console.log("The keyword is " + keyword);
+  return keyword;
+}
+
+function ratingSystem(rating) {
+  rating = (scoreRating * 20);
+  console.log(rating)
+  return rating + "%";
+}
+
+voteNum = 1;
+
+function ratingVoteNumber(voteNum) {
+  voteNum = this.voteNum++;
+  return voteNum;
+}
+
+description = "Formulated with Vitamin E, Panthenol and Shea Butter, the natural technologies moisturise your hair, to help improve the feel, shine and flexibility, whilst protecting hair from environmental damage. Panthenol also has anti-inflammatory properties to help sooth the scalp to prevent irritation and dryness. This Natural Defence product does not contain: parabens, sulphates (SLS SLES), synthetic dye, petrochemicals, ingredients from animal sources and is not tested on animals. The ManCave Caffeine Shampoo is a Vegan friendly product.";
+
+function productLongDescription(description) {
+  description = this.description;
+  console.log(description);
+  return description;
+}
+
+title = "ManCave Caffeine Shampoo - 200ml";
+
+function productTitle(title) {
+  title = this.title;
+  return title;
+}
+
+productIngredients = "Aqua (Water), Sodium Lauroyl Methyl Isethionate, Glycerin, Cocamidopropyl Betaine, Propanediol, Sodium Methyl Isethionate, Aloe Barbadensis (Aloe Vera) Leaf Juice, Caffeine, Arginine, Panthenol, Butyrospermum Parkii (Shea Butter), Tocopheryl Acetate, Tocopherol, Parfum (Fragrance), Acrylates /C10-30 Alkyl Acrylate Crosspolymer, Lauric Acid, Sodium Chloride, Coco-Glucoside, Glyceryl Oleate, Trisodium Ethylenediamine Disuccinate, Guar Hydroxypropyltrimonium Chloride, Sodium Hydroxide, Citric Acid, Phenoxyethanol, Styrene/Acrylates Copolymer, Magnesium Nitrate, Benzyl Alcohol, Methylisothiazolinone, Hydrogenated Palm Glycerides Citrate, Coumarin, Limonene, CI 75810 (Chlorophyllin Copper Complex)";
+
+function productIn(productIngredients) {
+  productIngredients = this.productIngredients;
+  return productIngredients;
+}
+
+function submitProductData() {
+  let productData = {
+    size: size(),
+    title: productTitle(),
+    about: productLongDescription(),
+    incredients: productIn(),
+    searchWord: searchWords(),
+    cost: USD_Price(),
+    images: ProductImages(),
+    user_rating: ratingSystem(),
+    voter_total: ratingVoteNumber()
+  }
+
+  console.log(productData);
+  let reference = database.ref('products');
+  reference.push(productData);
+}
+
+
+// // NOTE: The above code needs to be commented out for successful referencing of database data
+// function getProductData() {
+//   let ref = database.ref('products');
+//   ref.on('value', gotData, errData);
+//   console.log(ref);
+// }
+//
+// function gotData(data) {
+//   //console.log(data.val());
+//   let product = data.val();
+//   console.log("data.val is " + product);
+//   let keys = Object.keys(product);
+//   console.log(keys);
+//   for(let i = 0; i < keys.length; i++) {
+//     let k = keys[0];
+//     var costLocal = product[k].cost;
+//     var imagesLocal = product[k].images;
+//   }
+//   console.log(costLocal);
+//   console.log(imagesLocal[0]);
+//   document.getElementById('showResult').src = "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FJohnson's%20Baby%20Shampoo%2FJohnson1.jpg?alt=media&token=ff79d78d-2d24-4240-a74b-ac13ac593c3e";
+// }
+
+
+function errData(err) {
+  console.log('Error!');v
+  console.log(err);
+}
+
+
+
+</script>

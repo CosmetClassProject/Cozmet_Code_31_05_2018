@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>objectUploader</title>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script>
+      var config = {
+    apiKey: "AIzaSyDiUcBb8L5PHUCMs3NQTbK6tv-FzGQrUHs",
+    authDomain: "cosmet-users.firebaseapp.com",
+    databaseURL: "https://cosmet-users.firebaseio.com",
+    projectId: "cosmet-users",
+    storageBucket: "cosmet-users.appspot.com",
+    messagingSenderId: "8164921910"
+    };
+    firebase.initializeApp(config);
+    console.log(firebase);
+
+    let database = firebase.database();
+    </script>
+  </head>
+  <body>
+
+  <button onclick="getProductData();" >Get data</button>
+  <button onclick="submitProductData();" >Sent to database</button>
+  <button onclick="testDisplay();" >testDisplay</button>
+
+  <img id="showResult">test</img>
+  </body>
+</html>
+
+<script type="text/javascript">
+
+//Keywords
+keyword = "shampoo"
+
+// Rating System global variables
+let scoreRating = 4.5;
+
+// Pricing global variables
+let  price = 4.09;
+let euro = 1;
+let US_dollar = euro * 1.23;
+let Sterling = euro * .88;
+
+
+// let Euro_Price;
+
+function Euro_Price(Euro_Price) {
+  Euro_Price = euro * price;
+  console.log("€" + Euro_Price);
+  return ("€" + Euro_Price);
+}
+
+function USD_Price(USD_Price) {
+  USD_Price = (US_dollar * price).toFixed(2);
+  console.log("$" + USD_Price);
+  return ("$" + USD_Price);
+}
+
+function Sterling_Price(Sterling_Price) {
+  Sterling_Price = (Sterling * price).toFixed(2);
+  console.log("£" + Sterling_Price);
+  return ("£" + Sterling_Price);
+}
+
+function ProductImages(imageRefs) {
+  imageRefs = [
+    "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FJohnson's%20Baby%20Bedtime%20Shampoo%20500ml%2Fdownload.png?alt=media&token=c33f8095-7145-4a7e-8909-b162c04b4f38",
+    "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FJohnson's%20Baby%20Bedtime%20Shampoo%20500ml%2Ffiller.png?alt=media&token=c3ad127a-20dd-4c25-94a7-44c7de3399e1",
+    "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FJohnson's%20Baby%20Bedtime%20Shampoo%20500ml%2Ffiller.png?alt=media&token=c3ad127a-20dd-4c25-94a7-44c7de3399e1",
+    "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FJohnson's%20Baby%20Bedtime%20Shampoo%20500ml%2Ffiller.png?alt=media&token=c3ad127a-20dd-4c25-94a7-44c7de3399e1"
+  ];
+  return imageRefs;
+}
+
+
+function searchWords(keyword) {
+  keyword = this.keyword;
+  console.log("The keyword is " + keyword);
+  return keyword;
+}
+
+function ratingSystem(rating) {
+  rating = (scoreRating * 20);
+  console.log(rating)
+  return rating + "%";
+}
+
+voteNum = 1;
+
+function ratingVoteNumber(voteNum) {
+  voteNum = this.voteNum++;
+  return voteNum;
+}
+
+description = "Our baby shampoo, with its unique No More Tears® formula is gentle to the eyes and ophthalmologist tested. Its formula leaves hair baby-soft and the fragrance of lavender is designed to help calm the senses. Free from: parabens, phthalates, soap & dye. NO MORE TEARS® formula is gentle to the eyes.  Relaxing Aroma";
+
+function productLongDescription(description) {
+  description = this.description;
+  console.log(description);
+  return description;
+}
+
+title = "Johnson's Baby Bedtime Shampoo - 500ml";
+
+function productTitle(title) {
+  title = this.title;
+  return title;
+}
+
+productIngredients = "[PR-013491] Aqua, Coco-Glucoside, Sodium Lauroamphoacetate, Sodium Laureth Sulfate, Citric Acid, Lavandula Angustifolia Flower Extract, Polyquaternium-10, Propylene Glycol, Lactic Acid, Glucose, Sodium Chloride, Polysorbate 20, PEG-150 Distearate, PEG-80 Sorbitan Laurate, Sodium Benzoate, Parfum.";
+
+function productIn(productIngredients) {
+  productIngredients = this.productIngredients;
+  return productIngredients;
+}
+
+function submitProductData() {
+  let productData = {
+    title: productTitle(),
+    about: productLongDescription(),
+    incredients: productIn(),
+    searchWord: searchWords(),
+    cost: USD_Price(),
+    images: ProductImages(),
+    user_rating: ratingSystem(),
+    voter_total: ratingVoteNumber()
+  }
+
+  console.log(productData);
+  let reference = database.ref('products');
+  reference.push(productData);
+}
+
+
+// // NOTE: The above code needs to be commented out for successful referencing of database data
+// function getProductData() {
+//   let ref = database.ref('products');
+//   ref.on('value', gotData, errData);
+//   console.log(ref);
+// }
+//
+// function gotData(data) {
+//   //console.log(data.val());
+//   let product = data.val();
+//   console.log("data.val is " + product);
+//   let keys = Object.keys(product);
+//   console.log(keys);
+//   for(let i = 0; i < keys.length; i++) {
+//     let k = keys[0];
+//     var costLocal = product[k].cost;
+//     var imagesLocal = product[k].images;
+//   }
+//   console.log(costLocal);
+//   console.log(imagesLocal[0]);
+//   document.getElementById('showResult').src = "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FJohnson's%20Baby%20Shampoo%2FJohnson1.jpg?alt=media&token=ff79d78d-2d24-4240-a74b-ac13ac593c3e";
+// }
+
+
+function errData(err) {
+  console.log('Error!');v
+  console.log(err);
+}
+
+
+
+</script>

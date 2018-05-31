@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>objectUploader</title>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+    <script>
+      var config = {
+    apiKey: "AIzaSyDiUcBb8L5PHUCMs3NQTbK6tv-FzGQrUHs",
+    authDomain: "cosmet-users.firebaseapp.com",
+    databaseURL: "https://cosmet-users.firebaseio.com",
+    projectId: "cosmet-users",
+    storageBucket: "cosmet-users.appspot.com",
+    messagingSenderId: "8164921910"
+    };
+    firebase.initializeApp(config);
+    console.log(firebase);
+
+    let database = firebase.database();
+    </script>
+  </head>
+  <body>
+
+  <button onclick="getProductData();" >Get data</button>
+  <button onclick="submitProductData();" >Sent to database</button>
+  <button onclick="testDisplay();" >testDisplay</button>
+  <button onclick="submitNewProductReview();">Submit review details</button>
+
+  <img id="showResult">test</img>
+  </body>
+</html>
+
+<script type="text/javascript">
+
+//Keywords
+// keyword = "shampoo"
+//
+// // Rating System global variables
+// let scoreRating = 4.8;
+//
+// // Pricing global variables
+// let  price = 5.49;
+// let euro = 1;
+// let US_dollar = euro * 1.23;
+// let Sterling = euro * .88;
+//
+//
+// // let Euro_Price;
+//
+// function Euro_Price(Euro_Price) {
+//   Euro_Price = euro * price;
+//   console.log("€" + Euro_Price);
+//   return ("€" + Euro_Price);
+// }
+//
+// function USD_Price(USD_Price) {
+//   USD_Price = (US_dollar * price).toFixed(2);
+//   console.log("$" + USD_Price);
+//   return ("$" + USD_Price);
+// }
+//
+// function Sterling_Price(Sterling_Price) {
+//   Sterling_Price = (Sterling * price).toFixed(2);
+//   console.log("£" + Sterling_Price);
+//   return ("£" + Sterling_Price);
+// }
+//
+// function ProductImages(imageRefs) {
+//   imageRefs = [
+//     "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FBaby%20Bed%20Time%20Bath%2F81soflo5ITL._SL1500_.jpg?alt=media&token=d8c91174-1d81-4ef5-94d1-33dcd01efa18",
+//     "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FBaby%20Bed%20Time%20Bath%2F81nJufJt4BL._SL1500_.jpg?alt=media&token=e05fee44-84e9-46f4-b9bc-2ce05f2f6ca7",
+//     "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FBaby%20Bed%20Time%20Bath%2F31tD-WobejL.jpg?alt=media&token=10e4bc23-ee55-459f-b18b-fe48bf040648",
+//     "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FBaby%20Bed%20Time%20Bath%2F61QBnd0OweL._SL1050_.jpg?alt=media&token=67317bc1-830c-4453-b7ef-26f7433cbd5a"
+//   ];
+//   return imageRefs;
+// }
+//
+//
+// function searchWords(keyword) {
+//   keyword = this.keyword;
+//   console.log("The keyword is " + keyword);
+//   return keyword;
+// }
+//
+// function ratingSystem(rating) {
+//   rating = (scoreRating * 20);
+//   console.log(rating)
+//   return rating + "%";
+// }
+//
+// voteNum = 1;
+//
+// function ratingVoteNumber(voteNum) {
+//   voteNum = this.voteNum++;
+//   return voteNum;
+// }
+//
+// description = "We love babies.\\ " + "And we understand the benefits of a good night’s sleep. That’s why we developed a nightly routine that is clinically proven to help your baby sleep better*. Before bed, treat your baby to a warm bath using our JOHNSON'S® Bedtime Baby Bath, then gently massage skin with our JOHNSON'S® Bedtime Baby Lotion. Each product contains NaturalCalm™, a patented blend of relaxing aromas. Our unique NO MORE TEARS® formula is gentle to the eyes. \\JOHNSON’S®. Trusted by mums for over 125 years.";
+//
+// function productLongDescription(description) {
+//   description = this.description;
+//   console.log(description);
+//   return description;
+// }
+//
+// title = "Johnson's Bedtime Baby Bath - 300ml";
+//
+// function productTitle(title) {
+//   title = this.title;
+//   return title;
+// }
+//
+// productIngredients = "[PR – 013492] Aqua, Coco-Glucoside, Sodium Lauroamphoacetate, Sodium Laureth Sulfate, Citric Acid, Polysorbate 20, Sodium Chloride, PEG – 150 Distearate, PEG-80 Sorbitan Laurate, Sodium Benzoate, Parfum.";
+//
+// function productIn(productIngredients) {
+//   productIngredients = this.productIngredients;
+//   return productIngredients;
+// }
+//
+// function submitProductData() {
+//   let productData = {
+//     title: userRating(),
+//     about: revieweUser(),
+//     incredients: productIn(),
+//     searchWord: searchWords(),
+//     cost: USD_Price(),
+//     images: ProductImages(),
+//     user_rating: ratingSystem(),
+//     voter_total: ratingVoteNumber()
+//   }
+//
+//   console.log(productData);
+//   let reference = database.ref('products');
+//   reference.push(productData);
+// }
+
+
+reviewByUser = "Only shampoo we have used happily for our children and 10 grandchildren for a long long time."
+
+function reviewByUserF(reviewByUser) {
+  reviewByUser = this.reviewByUser;
+  return reviewByUser;
+
+}
+
+userRating = 5;
+
+function userRatingF(userRating) {
+  userRating = this.userRating;
+  console.log(userRating);
+  return userRating;
+}
+
+_commentHeadline = "Johnsons Babe shampoo";
+
+function commentHeadlineF(_commentHeadline) {
+  _commentHeadline = this._commentHeadline;
+  console.log(_commentHeadline);
+  return _commentHeadline;
+}
+
+reviewersName = "Anonymous";
+
+function reviewerNameF(reviewersName) {
+  reviewersName = this.reviewersName;
+  return reviewersName;
+}
+
+likedReview = 6;
+unlikedReview = 0;
+
+function likeReviewF(likedReview){
+  likedReview = this.likedReview;
+  return likedReview;
+}
+
+function unlikedReviewF(unlikedReview){
+  unlikedReview = this.unlikedReview;
+  return unlikedReview;
+}
+
+
+date = new Date();
+submissionDate = date.getUTCFullYear() + '-' +
+    ('00' + date.getUTCMonth()).slice(-2) + '-' +
+    ('00' + date.getUTCDate()).slice(-2) + ' ' +
+    ('00' + date.getUTCHours()).slice(-2) + ':' +
+    ('00' + date.getUTCMinutes()).slice(-2) + ':' +
+    ('00' + date.getUTCSeconds()).slice(-2);
+
+
+
+
+function submitNewProductReview() {
+  let reviewData = {
+    userRating: userRatingF(),
+    reviewByUser: reviewByUserF(),
+    commentHeadline: commentHeadlineF(),
+    likeReview: likeReviewF(),
+    dislikeReview: unlikedReviewF(),
+    reviewerName: reviewerNameF(),
+    reviewDate: submissionDate
+  }
+    console.log(reviewData);
+    let reference = database.ref('reviews/johnsons_baby');
+    reference.push(reviewData);
+  }
+
+
+// // NOTE: The above code needs to be commented out for successful referencing of database data
+// function getProductData() {
+//   let ref = database.ref('products');
+//   ref.on('value', gotData, errData);
+//   console.log(ref);
+// }
+//
+// function gotData(data) {
+//   //console.log(data.val());
+//   let product = data.val();
+//   console.log("data.val is " + product);
+//   let keys = Object.keys(product);
+//   console.log(keys);
+//   for(let i = 0; i < keys.length; i++) {
+//     let k = keys[0];
+//     var costLocal = product[k].cost;
+//     var imagesLocal = product[k].images;
+//   }
+//   console.log(costLocal);
+//   console.log(imagesLocal[0]);
+//   document.getElementById('showResult').src = "https://firebasestorage.googleapis.com/v0/b/cosmet-users.appspot.com/o/Products%2FShampoo%2FJohnson's%20Baby%20Shampoo%2FJohnson1.jpg?alt=media&token=ff79d78d-2d24-4240-a74b-ac13ac593c3e";
+// }
+
+
+function errData(err) {
+  console.log('Error!');v
+  console.log(err);
+}
+
+
+
+</script>
